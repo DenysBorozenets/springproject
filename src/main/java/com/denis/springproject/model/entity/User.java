@@ -1,7 +1,7 @@
 package com.denis.springproject.model.entity;
 
-import com.denis.springproject.model.Role;
-import com.denis.springproject.model.Status;
+import com.denis.springproject.model.enums.Role;
+import com.denis.springproject.model.enums.Status;
 import lombok.Data;
 
 import javax.persistence.*;

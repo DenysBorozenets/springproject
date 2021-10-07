@@ -1,5 +1,6 @@
-package com.denis.springproject.model;
+package com.denis.springproject.model.enums;
 
+import com.denis.springproject.model.enums.Permission;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;

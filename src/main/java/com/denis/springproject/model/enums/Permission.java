@@ -1,4 +1,4 @@
-package com.denis.springproject.model;
+package com.denis.springproject.model.enums;
 
 public enum Permission {
     DEVELOPERS_READ("developers:read"),

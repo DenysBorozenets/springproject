@@ -1,6 +1,6 @@
 package com.denis.springproject.security;
 
-import com.denis.springproject.model.Status;
+import com.denis.springproject.model.enums.Status;
 import com.denis.springproject.model.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
