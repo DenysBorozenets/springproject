@@ -1,6 +1,5 @@
-package com.denis.springproject.security;
+package com.denis.springproject.model;
 
-import com.denis.springproject.model.enums.Status;
 import com.denis.springproject.model.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,10 +17,7 @@ public class SecurityUser implements UserDetails {
     private final List<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
 
-    public SecurityUser(String username,
-                        String password,
-                        List<SimpleGrantedAuthority> authorities,
-                        boolean isActive) {
+    public SecurityUser(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -45,34 +41,28 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return isActive;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return isActive;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return isActive;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return isActive;
+        return true;
     }
 
     public static UserDetails fromUser(User user) {
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getRole().getAuthorities()
+                user.getEmail(), user.getPassword(),
+                user.getRole().getAuthority()
         );
     }
-
 }
