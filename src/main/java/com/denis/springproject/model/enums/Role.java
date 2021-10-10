@@ -13,7 +13,6 @@ public enum Role {
     ADMIN(Set.of(Permission.READ, Permission.WRITE)),
     USER(Set.of(Permission.READ)),
     PATIENT(Set.of(Permission.READ)),
-    NURSE(Set.of(Permission.READ)),
     DOCTOR(Set.of(Permission.READ));
 
     private final Set<Permission> permissions;

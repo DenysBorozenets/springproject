@@ -8,17 +8,37 @@
 <body>
 <div class="container mt-5 mb-5">
     <form class="form-signin" method="post" action="/login">
-        <h2 class="form-signin-heading">Login</h2>
+        <h2 th:text="#{login.text}"></h2>
         <p>
-            <label for="username">Email</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Enter the email" required>
+            <label for="username" th:text="#{email.text}"></label>
+            <input type="text" id="username" name="username" class="form-control" th:placeholder="#{enter.email.text}" required>
         </p>
         <p>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Enter the password" required>
+            <label for="password" th:text="#{password.text}"></label>
+            <input type="password" id="password" name="password" class="form-control" th:placeholder="#{enter.password.text}" required>
         </p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{sign.in}"></button>
     </form>
 </div>
+<span th:text="#{lang.change}"></span>:
+<select id="locales">
+    <option value=""></option>
+    <option value="en" th:text="#{lang.eng}"></option>
+    <option value="ua" th:text="#{lang.ua}"></option>
+
+</select>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    $("#locales").change(function () {
+    var selectedOption = $('#locales').val();
+    if (selectedOption !== ''){
+    window.location.replace('login?lang=' + selectedOption);
+    }
+    });
+    });
+</script>
 </body>
 </html>
