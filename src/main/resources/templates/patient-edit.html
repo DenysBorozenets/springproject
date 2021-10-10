@@ -8,16 +8,15 @@
 <body>
 <header th:insert="blocks/header::header"></header>
 <div class="container mt-5 mb-5">
-    <h1>Edit article</h1>
-    <div th:each="el : ${post}">
+    <h1>Edit patient</h1>
+    <div th:each="el : ${patient}">
         <form method="post">
-            <input type="text" th:value="${el.title}" name="title" placeholder="Enter the title of the article" class="form-control"><br>
-            <input type="text" th:value="${el.anons}" name="anons" placeholder="enter the anons of the article" class="form-control"><br>
-            <textarea name="full_text" placeholder="enter the full text of the article" class="form-control" th:text="${el.full_text}"/><br>
+            <input type="text" th:value="${el.email}" name="email" placeholder="Enter the email of the patient" class="form-control"><br>
+            <input type="text" th:value="${el.firstName}" name="firstName" placeholder="Enter the first name of the patient" class="form-control"><br>
+            <input type="text" th:value="${el.lastName}" name="lastName" placeholder="Enter the last name of the patient" class="form-control"><br>
             <button type="submit" class="btn btn-success">Update</button>
         </form>
     </div>
 </div>
-<div th:insert="blocks/footer::footer"></div>
 </body>
 </html>

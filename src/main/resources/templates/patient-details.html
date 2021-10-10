@@ -6,11 +6,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
 </head>
 <body>
+<header th:insert="blocks/header::header"></header>
 <div class="container mt-5">
     <div th:each="el : ${patient}" class="alert alert-info mt-2">
         <h1 th:text="${el.email}"></h1>
         <p th:text="${el.firstName}"></p>
         <p th:text="${el.lastName}"></p>
+        <a th:href="'/welcome' + '/admin' + '/patient/' + ${el.id} + '/edit'" class="btn btn-warning">Edit</a><br><br>
+        <form th:action="'/welcome' + '/admin' + '/patient/' + ${el.id} + '/remove'" method="post">
+            <button class="btn btn-warning" type="submit">Delete</button>
+        </form>
     </div>
 </div>
 
