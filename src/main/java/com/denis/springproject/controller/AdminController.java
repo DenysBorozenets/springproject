@@ -2,7 +2,6 @@ package com.denis.springproject.controller;
 
 import com.denis.springproject.model.entity.Patient;
 import com.denis.springproject.repository.PatientRepository;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +41,7 @@ public class AdminController {
                                  @RequestParam String lastName) {
         Patient patient = new Patient(email, firstName, lastName);
         patientRepository.save(patient);
-        return "redirect:/admin/patient";
+        return "redirect:/welcome/admin/patient";
     }
 
     @GetMapping("/admin/patient/{id}")
