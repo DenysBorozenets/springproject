@@ -1,10 +1,9 @@
 package com.denis.springproject.model.entity;
 
 import com.denis.springproject.model.enums.Role;
-import com.denis.springproject.model.enums.Status;
 import lombok.Data;
-
 import javax.persistence.*;
+
 
 @Data
 @Entity
@@ -30,7 +29,5 @@ public class User {
     @Column(name = "role")
     private Role role;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "status")
-    private Status status;
+
 }
