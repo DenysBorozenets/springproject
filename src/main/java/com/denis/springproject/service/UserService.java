@@ -1,30 +1,41 @@
 package com.denis.springproject.service;
 
 
-import com.denis.springproject.model.SecurityUser;
+import com.denis.springproject.exception.UserNotFoundException;
 import com.denis.springproject.model.entity.User;
 import com.denis.springproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service("userService")
-public class UserService implements UserDetailsService {
+import java.util.List;
+import java.util.Optional;
 
-    private final UserRepository userRepository;
-
+@Service
+public class UserService {
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UserRepository userRepository;
+
+    public List<User> listAll() {
+        return (List<User>) userRepository.findAll();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Email Not Found"));
-        return SecurityUser.fromUser(user);
+    public void save(User user){
+        userRepository.save(user);
     }
 
+    public User getId(Long id) throws UserNotFoundException {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new UserNotFoundException("Can`t find user with ID" + id);
+    }
+
+    public void delete(Long id) throws  UserNotFoundException{
+        Long count = userRepository.countById(id);
+        if (count==null || count == 0){
+            throw new UserNotFoundException();
+        }
+        userRepository.deleteById(id);
+    }
 }
