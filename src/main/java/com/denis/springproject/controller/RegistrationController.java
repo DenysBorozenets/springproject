@@ -2,6 +2,7 @@ package com.denis.springproject.controller;
 
 import com.denis.springproject.model.entity.User;
 import com.denis.springproject.repository.UserRepository;
+import com.denis.springproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ public class RegistrationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("user", new User());
@@ -23,10 +27,7 @@ public class RegistrationController {
 
     @PostMapping("/process_registration")
     public String saveUser(User user) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodePassword = encoder.encode(user.getPassword());
-        user.setPassword(encodePassword);
-        userRepository.save(user);
+        userService.saveUserWithDefaultRole(user);
         return "registration_success";
     }
 

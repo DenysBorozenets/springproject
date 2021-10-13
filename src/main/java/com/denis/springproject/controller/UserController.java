@@ -1,6 +1,7 @@
 package com.denis.springproject.controller;
 
 import com.denis.springproject.exception.UserNotFoundException;
+import com.denis.springproject.model.entity.Role;
 import com.denis.springproject.model.entity.User;
 import com.denis.springproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class UserController {
 
     @GetMapping("/users/add")
     public String addUser(Model model) {
+        List<Role> roles = userService.getRoles();
+        model.addAttribute("listRoles", roles);
         model.addAttribute("user", new User());
         model.addAttribute("pageTitle", "Add new user");
         return "user_add";
@@ -47,10 +50,12 @@ public class UserController {
     public String editUser(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
         try {
             User user = userService.getId(id);
+            List<Role> roles = userService.getRoles();
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             String encodePassword = encoder.encode(user.getPassword());
             user.setPassword(encodePassword);
             model.addAttribute("user", user);
+            model.addAttribute("listRoles", roles);
             model.addAttribute("pageTitle", "Edit user " + id );
             return "user_add";
         } catch (UserNotFoundException e) {

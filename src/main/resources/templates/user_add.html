@@ -45,6 +45,15 @@
                     <input type="checkbox" th:field="*{onTreatment}">
                 </div>
             </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Сhoose a role</label>
+                <div class="col-sm-8">
+                    <th:block th:each="role : ${listRoles}">
+                        <input type="checkbox" th:field="*{roles}"
+                        th:value="${role.id}" th:text="${role.name}"/>
+                    </th:block>
+                </div>
+            </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary m-3">Save</button>
                 <button type="button" class="btn btn-secondary m-3" onclick="cancelForm()">Cancel</button>
