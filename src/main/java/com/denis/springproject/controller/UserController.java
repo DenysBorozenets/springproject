@@ -4,6 +4,7 @@ import com.denis.springproject.exception.UserNotFoundException;
 import com.denis.springproject.model.entity.User;
 import com.denis.springproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +35,11 @@ public class UserController {
 
     @PostMapping("/users/save")
     public String saveUser(User user, RedirectAttributes redirect) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodePassword = encoder.encode(user.getPassword());
+        user.setPassword(encodePassword);
         userService.save(user);
-        redirect.addFlashAttribute("message", "The user has been saved");
+        redirect.addFlashAttribute("message", "The user has been saved successfully");
         return "redirect:/users";
     }
 
@@ -43,8 +47,11 @@ public class UserController {
     public String editUser(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
         try {
             User user = userService.getId(id);
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encodePassword = encoder.encode(user.getPassword());
+            user.setPassword(encodePassword);
             model.addAttribute("user", user);
-            model.addAttribute("pageTitle", "Edit user (ID " + id + ")");
+            model.addAttribute("pageTitle", "Edit user " + id );
             return "user_add";
         } catch (UserNotFoundException e) {
             redirect.addFlashAttribute("message", e.getMessage());
@@ -56,7 +63,7 @@ public class UserController {
     public String deleteUser(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
         try {
             userService.delete(id);
-            redirect.addFlashAttribute("message", "The user " + id + " has been deleted");
+            redirect.addFlashAttribute("message", "The user " + id + " has been successfully deleted");
         } catch (UserNotFoundException e) {
             redirect.addFlashAttribute("message", e.getMessage());
         }

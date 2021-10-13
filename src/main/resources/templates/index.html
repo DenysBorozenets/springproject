@@ -6,10 +6,21 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container-fluid text-center">
-    <h1>Welcome to hospital</h1>
-    <a class="h2" th:href="@{/users}">Users</a>
-</div>
-
+    <div class="container-fluid text-center">
+        <div>
+            <h1>Welcome to hospital</h1>
+        </div>
+        <div>
+            <h3>
+                <a th:href="@{/users}">Users</a>
+            </h3>
+            <h3>
+                <a th:href="@{/registration}">Registration</a>
+            </h3>
+            <h3>
+                <a th:href="@{/login}">Login</a>
+            </h3>
+        </div>
+    </div>
 </body>
 </html>
