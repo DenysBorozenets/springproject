@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<div>
+    <h1>Login to Hospital</h1>
+    <form th:action="@{/login}" method="post" style="max-width: 400px; margin: 0 auto">
+        <p>
+            E-mail:<input type="email" name="email" required />
+        </p>
+        <p>
+            Password:<input type="password" name="password" required />
+        </p>
+
+        <p>
+            <input type="submit" value="Sign in" />
+        </p>
+    </form>
+
+    <h3>
+        <a th:href="@{/registration}">Registration</a>
+    </h3>
+</div>
+</body>
+</html>

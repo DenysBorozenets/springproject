@@ -44,17 +44,42 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/users").authenticated()
+//                .anyRequest().permitAll()
+//                .and()
+//                .formLogin()
+//                    .usernameParameter("email")
+//                    .successHandler(loginHandler)
+//                    .defaultSuccessUrl("/users")
+//                    .permitAll()
+//                .and()
+//                .logout().logoutSuccessUrl("/").permitAll();
+//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/users").authenticated()
-                .anyRequest().permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/registration", "/process_registration").permitAll()
+                .antMatchers("/users/add/**", "/users/delete/**", "/users/edit/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .permitAll()
+                .loginPage("/login")
                 .usernameParameter("email")
+                .passwordParameter("password")
+                .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/users")
                 .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/").permitAll();
+                .logout()
+                .logoutSuccessUrl("/")
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
     }
 }

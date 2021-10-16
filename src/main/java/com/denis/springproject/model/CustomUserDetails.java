@@ -2,7 +2,6 @@ package com.denis.springproject.model;
 
 import com.denis.springproject.model.entity.Role;
 import com.denis.springproject.model.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -64,4 +63,6 @@ public class CustomUserDetails implements UserDetails {
     public String getFullName() {
         return user.getFirstName() + " " + user.getLastName();
     }
+
+
 }

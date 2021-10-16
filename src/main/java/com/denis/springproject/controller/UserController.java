@@ -74,4 +74,9 @@ public class UserController {
         }
         return "redirect:/users";
     }
+
+    @GetMapping("/403")
+    public String errorFourZeroThree() {
+        return "403";
+    }
 }
