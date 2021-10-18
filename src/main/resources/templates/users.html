@@ -23,6 +23,12 @@
     <div class="m-2">
         <a class="h3" th:href="@{/users/add}" sec:authorize="hasAnyAuthority('ADMIN')">Add user</a>
     </div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/doctors}" sec:authorize="hasAnyAuthority('ADMIN')">Doctors</a>
+    </div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/patients}" sec:authorize="hasAnyAuthority('ADMIN')">Patients</a>
+    </div>
 
     <div th:if="${message}" class="alert alert-success text center">
         [[${message}]]
@@ -32,13 +38,21 @@
         <table class="table table-bordered">
             <thead class="table-dark"> <!--don`t work "thead-dark"-->
                 <tr>
-                    <th>ID</th>
-                    <th>E-mail</th>
-                    <th>First name</th>
-                    <th>Last name</th>
+                    <th>
+                        <a th:href="@{'/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDir}}">ID</a>
+                    </th>
+                    <th>
+                        E-mail
+                    </th>
+                    <th>
+                        <a th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDirection=' + ${reverseSortDir}}">First name</a>
+                    </th>
+                    <th>
+                        <a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDirection=' + ${reverseSortDir}}">Last name</a>
+                    </th>
                     <th>On treatment</th>
                     <th>Role</th>
-                    <th sec:authorize="hasAnyAuthority('ADMIN')">EditDelete</th>
+                    <th sec:authorize="hasAnyAuthority('ADMIN')">Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,6 +74,27 @@
 
             </tbody>
         </table>
+    </div>
+    <div>
+        Total users: [[${totalUsers}]] || Page [[${currentPage}]] of [[${totalPages}]]
+
+        <a th:if="${currentPage > 1}" th:href="@{'/page/1?sortField=' + ${sortField} +'&sortDirection=' + ${sortDirection}}">First</a>
+        <span th:unless="${currentPage > 1}">First</span>
+
+        <a th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} +'&sortDirection=' + ${sortDirection}}">Previous</a>
+        <span th:unless="${currentPage > 1}">Previous</span>
+
+        <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+            <a th:if="${i != currentPage}" th:href="@{'/page/' + ${i}} + '?sortField=' + ${sortField} +'&sortDirection=' + ${sortDirection}">[[${i}]]</a>
+             <span th:unless="${i != currentPage}">[[${i}]]</span>
+
+        </span>
+
+        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} +'&sortDirection=' + ${sortDirection}}">Next</a>
+        <span th:unless="${currentPage < totalPages}">Next</span>
+
+        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages} + '?sortField=' + ${sortField} +'&sortDirection=' + ${sortDirection}}">Last</a>
+        <span th:unless="${currentPage < totalPages}">Last</span>
     </div>
 </div>
 

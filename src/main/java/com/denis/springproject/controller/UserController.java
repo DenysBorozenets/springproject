@@ -5,6 +5,8 @@ import com.denis.springproject.model.entity.Role;
 import com.denis.springproject.model.entity.User;
 import com.denis.springproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +24,30 @@ public class UserController {
 
     @GetMapping("/users")
     public String showAllUsers(Model model) {
-        List<User> users = userService.listAll();
+        return listByPage(model, 1, "firstName", "asc");
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public String listByPage(Model model,
+                             @PathVariable("pageNumber") int currentPage,
+                             @Param("sortField") String sortField,
+                             @Param("sortDirection") String sortDirection) {
+
+        Page<User> page = userService.listAll(currentPage, sortField, sortDirection);
+        long totalUsers = page.getTotalElements();
+        int totalPages = page.getTotalPages();
+
+        List<User> users = page.getContent();
+
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("listUsers", users);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
+        String reverseSortDir = sortDirection.equals("asc") ? "desc" : "asc";
+        model.addAttribute("reverseSortDir", reverseSortDir);
+
         return "users";
     }
 
